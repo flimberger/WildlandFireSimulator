@@ -8,7 +8,8 @@ Simulation::Simulation()
 }
 
 void
-Simulation::runSimulation(ExampleLandscape *landscape, FireWeather weather, FireMap *output)
+Simulation::runSimulation(WFS_Landscape *landscape, const FireWeatherVariables &weather,
+                          FireWeather weatherSim, Output *output)
 {
     //starting conditions
     int numberOfTimesteps = 1;
@@ -16,10 +17,10 @@ Simulation::runSimulation(ExampleLandscape *landscape, FireWeather weather, Fire
     float nextHour = 1.0;
 
     //weather conditions at begin of fire
-    weather.windyConditions = true; //at start of the fire there is wind
+    weatherSim.windyConditions = true; //at start of the fire there is wind
     if(simulateFireWeather){
-        weather.setStartingTime(12);
-        weather.calculateFireWeather(whichMonth, 0);
+        weatherSim.setStartingTime(12); //fires start at 12 o'clock
+        weatherSim.calculateFireWeather(whichMonth, 0);
         output->weatherData.push_back(output->storeWeatherData(weather, durationOfBurn));
     }
 
@@ -33,7 +34,7 @@ Simulation::runSimulation(ExampleLandscape *landscape, FireWeather weather, Fire
     //simulate fire spread
     while((fire.numberOfCellsBurning != 0) && (numberOfTimesteps < maxFireDuration)){
         if(simulateFireWeather && durationOfBurn >= nextHour){
-            weather.calculateFireWeather(whichMonth, static_cast<int>(std::floor(durationOfBurn)));
+            weatherSim.calculateFireWeather(whichMonth, static_cast<int>(std::floor(durationOfBurn)));
             output->weatherData.push_back(output->storeWeatherData(weather, durationOfBurn));
             nextHour = std::floor(durationOfBurn+1);
         }
@@ -51,8 +52,8 @@ Simulation::stringToMonth(std::string m){
         {"JUL"}, {"AUG"}, {"SEP"}, {"OCT"}, {"NOV"}, {"DEC"}
     };
     std::vector<Month> enumMonth{
-        {Month::January}, {Month::February}, {Month::March}, {Month::April}, {Month::May}, {Month::June},
-        {Month::June}, {Month::July}, {Month::September}, {Month::October}, {Month::November}, {Month::December},
+        Month::January, Month::February, Month::March, Month::April, Month::May, Month::June,
+        Month::June, Month::July, Month::September, Month::October, Month::November, Month::December
     };
     Month month;
     for(size_t i = 0; i<abrMonth.size(); i++){
@@ -60,7 +61,7 @@ Simulation::stringToMonth(std::string m){
             month = enumMonth[i];
         }
     }
-    return month;
+    return month; //warning if used uninitialized?!
 }
 
 }  // namespace wildland_firesim

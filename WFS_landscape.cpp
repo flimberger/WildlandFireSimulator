@@ -1,35 +1,34 @@
-#include "example_landscape.h"
+#include "WFS_landscape.h"
 
 namespace wildland_firesim {
 
-ExampleLandscape::ExampleLandscape()
+WFS_Landscape::WFS_Landscape()
 {}
 
 int
-ExampleLandscape::getWidth() const noexcept
+WFS_Landscape::getWidth() const noexcept
 {
     return m_width;
 }
 
 int
-ExampleLandscape::getHeight() const noexcept
+WFS_Landscape::getHeight() const noexcept
 {
     return m_height;
 }
 
-Cell
-*ExampleLandscape::getCellInformation(int x, int y)
+Cell *WFS_Landscape::getCellInformation(int x, int y)
 {
     return &cellInformation[static_cast<size_t>(y * m_width + x)];
 }
 
 int
-ExampleLandscape::getCellSize() const noexcept {
+WFS_Landscape::getCellSize() const noexcept {
     return m_cellSize;
 }
 
 void
-ExampleLandscape::importLandscapeFromFile()
+WFS_Landscape::importLandscapeFromFile()
 {
     // variables to store ascii grid information
     int width;
@@ -46,11 +45,11 @@ ExampleLandscape::importLandscapeFromFile()
             std::getline(input_stream, line);
             if(line.find("NCOLS")!=std::string::npos){
                 std::string param = line.substr(line.find_first_of(" "), line.npos);
-                width = utility::asFloat(param);
+                width = utility::asInteger(param);
             }
             if(line.find("NROWS")!=std::string::npos){
                 std::string param = line.substr(line.find_first_of(" "), line.npos);
-                height = utility::asFloat(param);
+                height = utility::asInteger(param);
             }
             /*
             if(line.find("CELLSIZE")!=std::string::npos){
@@ -60,7 +59,7 @@ ExampleLandscape::importLandscapeFromFile()
             */
         }
         //read ASCIIgrid data
-        int i = 0;
+        size_t i = 0;
         extractedInformation.resize(static_cast<size_t>(width * height));
         while(!input_stream.eof()){
             std::getline(input_stream, line);
@@ -142,7 +141,7 @@ ExampleLandscape::importLandscapeFromFile()
 }
 
 void
-ExampleLandscape::generateLandscapeFromFile(const std::string &fileName)
+WFS_Landscape::generateLandscapeFromFile(const std::string &fileName)
 {
 
     size_t NumberOfLandscapeCreationParameters = 10;
@@ -161,15 +160,12 @@ ExampleLandscape::generateLandscapeFromFile(const std::string &fileName)
     int height = utility::asInteger(parameters[1][0]);
     int specificatedCellSize = utility::asInteger(parameters[2][0]);
     float percentageGrass = utility::asFloat(parameters[3][0]);
-    //float percentageYoungWoody = utility::asFloat(parameters[4][0]);
     float percentageNonFlammable = utility::asFloat(parameters[4][0]);
     float equilibriumGrassFuelLoad = utility::asFloat(parameters[5][0]);
     float degreeOfCuring = utility::asFloat(parameters[6][0]);
-    float variationOfCuring = utility::asFloat(parameters[7][0]);
-    //float deadYoungWoodyBiomass = utility::asFloat(parameters[9][0]);
-    //float liveYoungWoodyBiomass = utility::asFloat(parameters[10][0]);
+    //float variationOfCuring = utility::asFloat(parameters[7][0]);
     float clusterDensity = utility::asFloat(parameters[8][0]);
-    int meanClusterSize = utility::asInteger(parameters[9][0]);
+    size_t meanClusterSize = static_cast<size_t>(utility::asInteger(parameters[9][0]));
 
     //resize landscape
     m_width = width;
@@ -184,7 +180,6 @@ ExampleLandscape::generateLandscapeFromFile(const std::string &fileName)
 
     //set vegetation type
     //standard vegetation is grass
-
     for(auto &cell : cellInformation){
         cell.type = VegetationType::Grass; //use grass as standard vegetation type
         cell.state = CellState::Unburned;
@@ -195,8 +190,8 @@ ExampleLandscape::generateLandscapeFromFile(const std::string &fileName)
 
     if(percentageGrass < 1.f){
         //calculate number of clusters
-        int numberOfClusters = static_cast<int>(std::round((percentageNonFlammable * static_cast<int>(datasize)) /
-                                                           (clusterDensity * pow(meanClusterSize,2))));
+        int numberOfClusters = static_cast<int>(std::round((percentageNonFlammable * static_cast<float>(datasize)) /
+                                                           (clusterDensity * meanClusterSize * meanClusterSize) ));
         //create each cluster by assigning vegetation parameters to individual cells within landscape
         for(int m = 0; m<numberOfClusters; m++){
             //selection of random coordinates (central point in cluster)
@@ -209,25 +204,25 @@ ExampleLandscape::generateLandscapeFromFile(const std::string &fileName)
             std::vector<int> yRange(meanClusterSize);
 
             //create sequences with coordinates
-            for(int i = 0; i < meanClusterSize; i++){
+            for(size_t i = 0; i < meanClusterSize; i++){
                 if(i<meanClusterSize/2){
-                    xRange[i] = x+i;
+                    xRange[i] = x+static_cast<int>(i);
                     if(xRange[i]>width) xRange[i] = xRange[i]-width;
-                    yRange[i] = y+i;
+                    yRange[i] = y+static_cast<int>(i);
                     if(yRange[i]>height) yRange[i] = yRange[i]-height ;
                 }else
                 {
-                    xRange[i] = x+(i-meanClusterSize);
+                    xRange[i] = x+static_cast<int>(i-meanClusterSize);
                     if(xRange[i]< 0) xRange[i] = xRange[i]+width;
-                    yRange[i] = y+(i-meanClusterSize);
+                    yRange[i] = y+static_cast<int>(i-meanClusterSize);
                     if(yRange[i]< 0) yRange[i] = yRange[i]+height;
                 }
             }
 
             //get Cartesian product
             std::vector<std::pair<int, int>> cartesianProduct;
-            for (int i = 0; i < meanClusterSize; i++)
-                for (int j = 0; j < meanClusterSize; j++)
+            for (size_t i = 0; i < meanClusterSize; i++)
+                for (size_t j = 0; j < meanClusterSize; j++)
                 {
                     cartesianProduct.push_back(std::make_pair(xRange[i],yRange[j]));
                 }

@@ -1,4 +1,4 @@
-#include "fireweather.h"
+#include "WFS_fireweather.h"
 
 namespace wildland_firesim {
 
@@ -11,7 +11,7 @@ FireWeather::FireWeather()
  * \param fileName
  */
 void
-FireWeather::getFixedFireWeatherParameter(const std::string fileName){
+FireWeather::getFixedFireWeatherParameter(const std::string fileName, FireWeatherVariables *weather){
     auto reader = csv::Reader{',', '#'};
     auto parameters = reader.parse(fileName);
 
@@ -23,13 +23,13 @@ FireWeather::getFixedFireWeatherParameter(const std::string fileName){
                   << " lines in the CSV data\n";
         std::exit(1);
     }
-    temperature = utility::asFloat(parameters[0][0]);
-    relHumidity = utility::asFloat(parameters[1][0]);
-    windSpeed = utility::asFloat(parameters[2][0]);
-    windDirection = utility::asInteger(parameters[3][0]);
+    weather->temperature = utility::asFloat(parameters[0][0]);
+    weather->relHumidity = utility::asFloat(parameters[1][0]);
+    weather->windSpeed = utility::asFloat(parameters[2][0]);
+    weather->windDirection = utility::asInteger(parameters[3][0]);
 }
 
-/*!
+/*!<
  * \brief Simulation::importMeteorologicalParameter
  * Function to import the meteorological parameters required for the calculation of the fire weather
  * from an external file and adding them to the landscape.
@@ -88,7 +88,7 @@ FireWeather::importMeteorologicalParameter(const std::string fileName)
 
 void
 FireWeather::setStartingTime(int startOfFire){
-   startingTime = startOfFire;
+    startingTime = startOfFire;
 }
 
 void
@@ -124,16 +124,16 @@ FireWeather::calculateFireWeather(int month,int durationOfBurn)
     // estimate hourly temperature by mininmal and maximal temperatures
     float alpha = Tx-Tn;
     float P = Tx-To;
-    float b=(Tp-To)/(std::sqrt(abs(hp-ho)));
+    float b=(Tp-To)/(std::sqrt(std::abs(hp-ho)));
     //TODO: check range of value
     if(t > hn && t <= hx){
         temperature = Tn+alpha*(((t-hn)/(hx-hn))*(Pi/2));
     }
     if(t > hx && t < ho){
-        temperature = To+P*std::sin((Pi/2)+((t-hx)/4)*(Pi/2));
+        temperature = To + P * std::sin((Pi/2)+((t-hx)/4)*(Pi/2));
     }
     if(t >= ho || t <= hp){
-        temperature = To+b*std::sqrt(abs(t-ho));
+        temperature = To + b * std::sqrt(std::abs(t-ho));
     }
 
     //derive relative humidity from distribution

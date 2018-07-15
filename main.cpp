@@ -3,8 +3,10 @@
 #include <cstdlib>
 
 #include "simulation.h"
-#include "example_landscape.h"
-#include "firemap.h"
+#include "WFS_landscape.h"
+#include "WFS_output.h"
+#include "fire.h"
+#include "WFS_fireweather.h"
 
 using namespace ::wildland_firesim;
 
@@ -132,9 +134,9 @@ int main(int argc, char *argv[] )
     //create instance of simulation class
     Simulation fireSimulation;
     //initialize fire weather
-    FireWeather weather;
+    FireWeather weatherSimulation;
     //initialize output
-    FireMap output;
+    Output output;
 
     //setup simulation
     //general parameters
@@ -146,7 +148,7 @@ int main(int argc, char *argv[] )
     fireSimulation.importLandscape = importLandscape;
 
     //enquire name of file for landscape creation
-    if(!importLandscape){
+    if (!importLandscape) {
         fireSimulation.nameOfLandscapeParameterFile = landscapeFile;
     }
 
@@ -155,16 +157,19 @@ int main(int argc, char *argv[] )
 
     //specification fire weather simulation
     fireSimulation.simulateFireWeather = simulateFireWeather;
+    // create container for weather data
+    FireWeatherVariables weather;
 
+    //if fire weather is simulated, import meteorological parameters
     if (simulateFireWeather) {
-        weather.importMeteorologicalParameter(weatherFile);
+        weatherSimulation.importMeteorologicalParameter(weatherFile);
         fireSimulation.whichMonth = fireSimulation.stringToMonth(month);
     }
 
     //start simulation(s) and data log
-    for(int i = 0; i<fireSimulation.numberOfRuns; i++){
+    for (int i = 0; i<fireSimulation.numberOfRuns; i++) {
         // create model landscape
-        ExampleLandscape modelLandscape;
+        WFS_Landscape modelLandscape;
         if(fireSimulation.importLandscape){
             modelLandscape.importLandscapeFromFile();
         } else {
@@ -175,7 +180,7 @@ int main(int argc, char *argv[] )
         //output.writeVegetationDataToCSV(modelLandscape, output.setfileName("vegetation_data", ".csv", i));
 
         //fire simulation
-        fireSimulation.runSimulation(&modelLandscape, weather, &output);
+        fireSimulation.runSimulation(&modelLandscape, weather, weatherSimulation, &output);
 
         //creating simulation output
         output.writeBurnMapToASCII(modelLandscape, output.setfileName("burn_map", ".asc", i ));

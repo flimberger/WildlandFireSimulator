@@ -9,8 +9,9 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 add_executable(${PROJECT_NAME}
     main.cpp
     fire.cpp
-    firemap.cpp
-    example_landscape.cpp
+    WFS_landscape.cpp
+    WFS_fireweather.cpp
+    WFS_output.cpp
     simulation.cpp
     utility.cpp
     csvreader.cpp

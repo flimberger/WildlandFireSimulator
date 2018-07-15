@@ -10,6 +10,7 @@
 #include "utility.h"
 #include "globals.h"
 #include "cell.h"
+#include "fire.h"
 
 namespace wildland_firesim {
 
@@ -25,29 +26,6 @@ struct WindCondition {
 };
 
 constexpr int WindDirectionsCount = 8;
-/*
-enum WindDirection {
-    North,
-    NorthEast,
-    East,
-    SouthEast,
-    South,
-    SouthWest,
-    West,
-    NorthWest
-};
-
-struct WindDirectionProbability {
-    float north;
-    float northEast;
-    float east;
-    float southEast;
-    float south;
-    float soutWest;
-    float west;
-    float northWest;
-};
-*/
 
 /*!
  * \brief The FireWeather class
@@ -63,12 +41,14 @@ public:
      * \param fileName
      */
     void importMeteorologicalParameter(const std::string fileName);
+
     /*!
      * \brief getFixedFireWeatherParameter
-     * read fixed fire weather parameter from file.
+     * imports fixed fire weather parameter from file.
      * \param fileName
      */
-    void getFixedFireWeatherParameter(const std::string fileName);
+    void getFixedFireWeatherParameter(const std::string fileName, FireWeatherVariables *weather);
+
     /*!
      * \brief calculateFireWeather
      * simulates hourly fire weather. Temperature is calculated using a model by

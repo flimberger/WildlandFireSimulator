@@ -1,14 +1,16 @@
-#include "firemap.h"
+#include "WFS_output.h"
+#include <sstream>
+#include <fstream>
 
 namespace wildland_firesim {
 
-FireMap::FireMap(): weatherData()
+Output::Output(): weatherData()
 {
 
 }
 
 std::string
-FireMap::setfileName(std::string baseName, std::string extention, int i)
+Output::setfileName(std::string baseName, std::string extention, int i)
 {
     std::stringstream ss;
     ss << baseName << i << extention;
@@ -18,7 +20,7 @@ FireMap::setfileName(std::string baseName, std::string extention, int i)
 
 //functions for printing map to ASCII grid
 void
-FireMap::writeBurnMapToASCII(LandscapeInterface &landscape, std::string fileName)
+Output::writeBurnMapToASCII(LandscapeInterface &landscape, std::string fileName)
 {
     // create variable for output file stream
     std::ofstream burnDataFile;
@@ -42,7 +44,7 @@ FireMap::writeBurnMapToASCII(LandscapeInterface &landscape, std::string fileName
 }
 
 void
-FireMap::writeVegetationMapToASCII(LandscapeInterface &landscape, std::string fileName)
+Output::writeVegetationMapToASCII(LandscapeInterface &landscape, std::string fileName)
 {
     std::ofstream vegetationTypeDataFile;
     //vegetationTypeDataFile.open("output/"+fileName);
@@ -65,7 +67,7 @@ FireMap::writeVegetationMapToASCII(LandscapeInterface &landscape, std::string fi
 
 //functions to write csv-files
 void
-FireMap::writeVegetationDataToCSV(LandscapeInterface &landscape, std::string fileName)
+Output::writeVegetationDataToCSV(LandscapeInterface &landscape, std::string fileName)
 {
     std::ofstream vegetationDataFile;
     //vegetationDataFile.open("output/"+fileName);
@@ -88,7 +90,7 @@ FireMap::writeVegetationDataToCSV(LandscapeInterface &landscape, std::string fil
 }
 
 void
-FireMap::writeBurnDataToCSV(LandscapeInterface &landscape, Fire &fire, std::string fileName)
+Output::writeBurnDataToCSV(LandscapeInterface &landscape, Fire &fire, std::string fileName)
 {
     std::ofstream burnDataFile;
     //burnDataFile.open("output/"+fileName);
@@ -118,7 +120,7 @@ FireMap::writeBurnDataToCSV(LandscapeInterface &landscape, Fire &fire, std::stri
 }
 
 void
-FireMap::writeFireWeatherDataToCSV(std::vector<std::string> weatherData , std::string fileName)
+Output::writeFireWeatherDataToCSV(std::vector<std::string> weatherData , std::string fileName)
 {
     std::ofstream weatherDataFile;
     //weatherDataFile.open("output/"+fileName);
@@ -132,7 +134,7 @@ FireMap::writeFireWeatherDataToCSV(std::vector<std::string> weatherData , std::s
 
 //functions to store data in strings
 std::string
-FireMap::storeWeatherData(FireWeather &weather, float durationOfBurn)
+Output::storeWeatherData(const FireWeatherVariables &weather, float durationOfBurn)
 {
     std::stringstream weatherData;
     weatherData << durationOfBurn << ",";

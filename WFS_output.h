@@ -11,10 +11,10 @@ namespace wildland_firesim {
  * \brief The FireMap class
  * Class containing function to define the output of the model.
  */
-class FireMap
+class Output
 {
 public:
-    FireMap();
+    Output();
     /*!
      * \brief writeBurnMapToASCII
      * Function to write cell states into an ascii-grid.
@@ -66,7 +66,7 @@ public:
      * \param durationOfBurn
      * \return
      */
-    std::string storeWeatherData(FireWeather &weather, float durationOfBurn);
+    std::string storeWeatherData(const FireWeatherVariables &weather, float durationOfBurn);
 
     std::vector<std::string> weatherData;
 };

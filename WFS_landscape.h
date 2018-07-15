@@ -12,10 +12,10 @@
 
 namespace wildland_firesim {
 
-class ExampleLandscape : public LandscapeInterface
+class WFS_Landscape : public LandscapeInterface
 {
 public:
-    ExampleLandscape();
+    WFS_Landscape();
 
     /*!
      * \brief generateLandscapeFromFile
