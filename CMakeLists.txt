@@ -14,5 +14,4 @@ add_executable(${PROJECT_NAME}
     WFS_output.cpp
     simulation.cpp
     utility.cpp
-    csvreader.cpp
-    fireweather.cpp)
+    csvreader.cpp)
