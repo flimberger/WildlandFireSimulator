@@ -4,23 +4,25 @@
 #include <cstdlib>
 #include <cmath>
 #include <iostream>
-#include "csvreader.h"
-#include "globals.h"
-#include "utility.h"
-#include "cell.h"
-#include "landscape_interface.h"
+
+#include "../csvreader.h"
+#include "../globals.h"
+#include "../utility.h"
+#include "../cell.h"
+#include "../landscape_interface.h"
 
 namespace wildland_firesim {
+namespace wfs {
 
 /*!
  * \brief The WFS_Landscape class
  * is derived from the landscape_interface class. It contains all relevant landscape information for the fire
  * spread simulation.
  */
-class WFS_Landscape : public LandscapeInterface
+class Landscape : public LandscapeInterface
 {
 public:
-    WFS_Landscape();
+    Landscape();
 
     /*!
      * \brief generateLandscapeFromFile
@@ -79,6 +81,7 @@ private:
     std::size_t datasize;
 };
 
+}  // namespace wfs
 }  // namespace wildland_firesim
 
 #endif // WILDLAND_FIRESIM_LANDSCAPE_H

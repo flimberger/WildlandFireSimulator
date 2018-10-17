@@ -1,8 +1,10 @@
-#include "WFS_output.h"
+#include "Output.h"
+
 #include <sstream>
 #include <fstream>
 
 namespace wildland_firesim {
+namespace wfs {
 
 Output::Output(): weatherData()
 {
@@ -143,4 +145,5 @@ Output::storeWeatherData(const FireWeatherVariables &weather, float durationOfBu
     return weatherData.str();
 }
 
-}//namespace wildland_firesim
+} // namespace wfs
+} // namespace wildland_firesim

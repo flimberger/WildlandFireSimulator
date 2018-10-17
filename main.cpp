@@ -1,11 +1,14 @@
+#include <clocale>
+
 #include <QtCore/QCommandLineParser>
 #include <QtCore/QCoreApplication>
-#include <clocale>
-#include "simulation.h"
-#include "WFS_landscape.h"
-#include "WFS_output.h"
+
 #include "fire.h"
-#include "WFS_fireweather.h"
+#include "simulation.h"
+
+#include "wfs/Landscape.h"
+#include "wfs/Output.h"
+#include "wfs/Fireweather.h"
 
 /*! \mainpage South African Savanna Fire Model
  * Fire is an important driver of vegetation dynamics in savanna ecosystems, yet often strongly
@@ -95,9 +98,9 @@ int main(int argc, char *argv[] )
     //create instance of simulation class
     Simulation fireSimulation;
     //initialize fire weather
-    FireWeather weatherSimulation;
+    wfs::FireWeather weatherSimulation;
     //initialize output
-    Output output;
+    wfs::Output output;
 
     //setup simulation
     //general parameters
@@ -151,7 +154,7 @@ int main(int argc, char *argv[] )
     //start simulation(s) and data log
     for (int i = 0; i<fireSimulation.numberOfRuns; i++) {
         // create model landscape
-        WFS_Landscape modelLandscape;
+        wfs::Landscape modelLandscape;
         if(fireSimulation.importLandscape){
             modelLandscape.importLandscapeFromFile();
         } else {

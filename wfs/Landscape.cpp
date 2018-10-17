@@ -1,35 +1,36 @@
-#include "WFS_landscape.h"
+#include "Landscape.h"
 
 namespace wildland_firesim {
+namespace wfs {
 
-WFS_Landscape::WFS_Landscape()
+Landscape::Landscape()
 {}
 
 int
-WFS_Landscape::getWidth() const noexcept
+Landscape::getWidth() const noexcept
 {
     return m_width;
 }
 
 int
-WFS_Landscape::getHeight() const noexcept
+Landscape::getHeight() const noexcept
 {
     return m_height;
 }
 
 Cell
-*WFS_Landscape::getCellInformation(int x, int y)
+*Landscape::getCellInformation(int x, int y)
 {
     return &cellInformation[static_cast<size_t>(y * m_width + x)];
 }
 
 int
-WFS_Landscape::getCellSize() const noexcept {
+Landscape::getCellSize() const noexcept {
     return m_cellSize;
 }
 
 void
-WFS_Landscape::importLandscapeFromFile()
+Landscape::importLandscapeFromFile()
 {
     // variables to store ascii grid information
     int width;
@@ -142,7 +143,7 @@ WFS_Landscape::importLandscapeFromFile()
 }
 
 void
-WFS_Landscape::generateLandscapeFromFile(const std::string &fileName)
+Landscape::generateLandscapeFromFile(const std::string &fileName)
 {
 
     size_t NumberOfLandscapeCreationParameters = 10;
@@ -260,4 +261,5 @@ WFS_Landscape::generateLandscapeFromFile(const std::string &fileName)
     }
 }
 
-}  // namespace wildland_firesim
+} // namespace wfs
+} // namespace wildland_firesim

@@ -1,11 +1,12 @@
 #ifndef FIREMAP_H
 #define FIREMAP_H
 
-#include "globals.h"
-#include "cell.h"
-#include "fire.h"
+#include "../cell.h"
+#include "../fire.h"
+#include "../globals.h"
 
 namespace wildland_firesim {
+namespace wfs {
 
 /*!
  * \brief The FireMap class
@@ -71,5 +72,7 @@ public:
     std::vector<std::string> weatherData;
 };
 
-} //namespace wildland_firesim
+} // namespace wfs
+} // namespace wildland_firesim
+
 #endif // FIREMAP_H

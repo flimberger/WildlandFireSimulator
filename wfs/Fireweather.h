@@ -6,13 +6,15 @@
 #include <vector>
 #include <sstream>
 #include <cmath>
-#include "csvreader.h"
-#include "utility.h"
-#include "globals.h"
-#include "cell.h"
-#include "fire.h"
+
+#include "../csvreader.h"
+#include "../utility.h"
+#include "../globals.h"
+#include "../cell.h"
+#include "../fire.h"
 
 namespace wildland_firesim {
+namespace wfs {
 
 template<typename T>
 struct distrParameter {
@@ -95,6 +97,7 @@ private:
     int startingTime; //time for fire weather
 };
 
-} //namespace wildland_firesim
+} // namespace wfs
+} // namespace wildland_firesim
 
 #endif // FIREWEATHER_H

@@ -11,11 +11,11 @@ find_package(Qt5 REQUIRED COMPONENTS Core)
 add_executable(${PROJECT_NAME}
     main.cpp
     fire.cpp
-    WFS_landscape.cpp
-    WFS_fireweather.cpp
-    WFS_output.cpp
     simulation.cpp
     utility.cpp
     csvreader.cpp
+    wfs/Fireweather.cpp
+    wfs/Landscape.cpp
+    wfs/Output.cpp
     )
 target_link_libraries(${PROJECT_NAME} Qt5::Core)

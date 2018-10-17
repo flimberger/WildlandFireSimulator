@@ -1,6 +1,7 @@
-#include "WFS_fireweather.h"
+#include "Fireweather.h"
 
 namespace wildland_firesim {
+namespace wfs {
 
 FireWeather::FireWeather()
 {
@@ -185,4 +186,5 @@ FireWeather::calculateFireWeather(int month,int durationOfBurn)
     }
 }
 
-}//namespace wildland_firesim
+} // namespace wfs
+} // namespace wildland_firesim

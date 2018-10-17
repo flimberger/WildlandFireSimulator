@@ -5,10 +5,11 @@
 #include <string>
 #include "utility.h"
 #include "globals.h"
-#include "WFS_landscape.h"
-#include "WFS_fireweather.h"
 #include "fire.h"
-#include "WFS_output.h"
+
+#include "wfs/Landscape.h"
+#include "wfs/Fireweather.h"
+#include "wfs/Output.h"
 
 namespace wildland_firesim{
 /*!
@@ -30,8 +31,8 @@ public:
      * \param weather
      * \param output
      */
-    void runSimulation(WFS_Landscape *landscape, const FireWeatherVariables &weather,
-                       FireWeather weathersim, Output *output);
+    void runSimulation(wfs::Landscape *landscape, const FireWeatherVariables &weather,
+                       wfs::FireWeather weathersim, wfs::Output *output);
 
     int numberOfRuns;
     int maxFireDuration;
