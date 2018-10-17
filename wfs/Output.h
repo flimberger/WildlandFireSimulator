@@ -15,42 +15,41 @@ namespace wfs {
 class Output
 {
 public:
-    Output();
     /*!
      * \brief writeBurnMapToASCII
      * Function to write cell states into an ascii-grid.
      * \param landscape
      * \param fileName
      */
-    void writeBurnMapToASCII(LandscapeInterface &landscape, std::string fileName);
+    static void writeBurnMapToASCII(LandscapeInterface &landscape, std::string fileName);
     /*!
      * \brief writeVegetationMapToASCII
      * Function to write vegetation types into an ascii-grid.
      * \param landscape
      * \param fileName
      */
-    void writeVegetationMapToASCII(LandscapeInterface &landscape, std::string fileName);
+    static void writeVegetationMapToASCII(LandscapeInterface &landscape, std::string fileName);
     /*!
      * \brief writeVegetationDataToCSV
      * Function to write vegetation parameters into a csv-Table
      * \param landscape
      * \param fileName
      */
-    void writeVegetationDataToCSV(LandscapeInterface &landscape, std::string fileName);
+    static void writeVegetationDataToCSV(LandscapeInterface &landscape, std::string fileName);
     /*!
      * \brief writeFireWeatherDataToCSV
      * Function to write weather data into a csv-Table
      * \param landscape
      * \param fileName
      */
-    void writeFireWeatherDataToCSV(std::vector<std::string> weatherData , std::string fileName);
+    void writeFireWeatherDataToCSV(std::string fileName);
 
     /*!
      * \brief writeBurnDataToCSV
      * \param landscape
      * \param fileName
      */
-    void writeBurnDataToCSV(LandscapeInterface &landscape, Fire &fire, std::string fileName);
+    static void writeBurnDataToCSV(LandscapeInterface &landscape, Fire &fire, std::string fileName);
     /*!
      * \brief setfileName
      * Function to generate file names.
@@ -59,16 +58,22 @@ public:
      * \param i
      * \return
      */
-    std::string setfileName(std::string baseName, std::string extention, int i);
+    static std::string fileName(std::string baseName, std::string extention, int i);
     /*!
      * \brief storeWeatherData
      * Function to extract weather data at a certain time.
      * \param weather
      * \param durationOfBurn
-     * \return
      */
-    std::string storeWeatherData(const FireWeatherVariables &weather, float durationOfBurn);
+    void storeWeatherData(const FireWeatherVariables &weather, float durationOfBurn);
 
+    /*!
+     * \brief clearWeatherData
+     * Deletes all aggregated weather data from this object.
+     */
+    void clearWeatherData();
+
+private:
     std::vector<std::string> weatherData;
 };
 

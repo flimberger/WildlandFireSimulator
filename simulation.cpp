@@ -21,7 +21,7 @@ Simulation::runSimulation(wfs::Landscape *landscape, const FireWeatherVariables 
     if(simulateFireWeather){
         weatherSim.setStartingTime(12); //fires start at 12 o'clock
         weatherSim.calculateFireWeather(whichMonth, 0);
-        output->weatherData.push_back(output->storeWeatherData(weather, durationOfBurn));
+        output->storeWeatherData(weather, durationOfBurn);
     }
 
     //igniting the fire
@@ -35,7 +35,7 @@ Simulation::runSimulation(wfs::Landscape *landscape, const FireWeatherVariables 
     while((fire.numberOfCellsBurning != 0) && (numberOfTimesteps < maxFireDuration)){
         if(simulateFireWeather && durationOfBurn >= nextHour){
             weatherSim.calculateFireWeather(whichMonth, static_cast<int>(std::floor(durationOfBurn)));
-            output->weatherData.push_back(output->storeWeatherData(weather, durationOfBurn));
+            output->storeWeatherData(weather, durationOfBurn);
             nextHour = std::floor(durationOfBurn+1);
         }
         fire.spreadFire(landscape, weather, timestepLength);

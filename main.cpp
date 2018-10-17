@@ -168,11 +168,11 @@ int main(int argc, char *argv[] )
         fireSimulation.runSimulation(&modelLandscape, weather, weatherSimulation, &output);
 
         //creating simulation output
-        output.writeBurnMapToASCII(modelLandscape, output.setfileName("burn_map", ".asc", i ));
-        output.writeBurnDataToCSV(modelLandscape, fireSimulation.fire, output.setfileName("burndata", ".csv", i));
+        wfs::Output::writeBurnMapToASCII(modelLandscape, output.fileName("burn_map", ".asc", i ));
+        wfs::Output::writeBurnDataToCSV(modelLandscape, fireSimulation.fire, output.fileName("burndata", ".csv", i));
         if(fireSimulation.simulateFireWeather){
-            output.writeFireWeatherDataToCSV(output.weatherData, output.setfileName("weatherdata", ".csv", i ) );
-            output.weatherData.clear();
+            output.writeFireWeatherDataToCSV(output.fileName("weatherdata", ".csv", i));
+            output.clearWeatherData();
         }
     }
 

@@ -6,13 +6,8 @@
 namespace wildland_firesim {
 namespace wfs {
 
-Output::Output(): weatherData()
-{
-
-}
-
 std::string
-Output::setfileName(std::string baseName, std::string extention, int i)
+Output::fileName(std::string baseName, std::string extention, int i)
 {
     std::stringstream ss;
     ss << baseName << i << extention;
@@ -122,7 +117,7 @@ Output::writeBurnDataToCSV(LandscapeInterface &landscape, Fire &fire, std::strin
 }
 
 void
-Output::writeFireWeatherDataToCSV(std::vector<std::string> weatherData , std::string fileName)
+Output::writeFireWeatherDataToCSV(std::string fileName)
 {
     std::ofstream weatherDataFile;
     //weatherDataFile.open("output/"+fileName);
@@ -135,14 +130,20 @@ Output::writeFireWeatherDataToCSV(std::vector<std::string> weatherData , std::st
 }
 
 //functions to store data in strings
-std::string
+void
 Output::storeWeatherData(const FireWeatherVariables &weather, float durationOfBurn)
 {
-    std::stringstream weatherData;
-    weatherData << durationOfBurn << ",";
-    weatherData << weather.temperature << "," << weather.relHumidity << ",";
-    weatherData << weather.windSpeed << "," << weather.windDirection;
-    return weatherData.str();
+    std::stringstream outstream;
+    outstream << durationOfBurn << ",";
+    outstream << weather.temperature << "," << weather.relHumidity << ",";
+    outstream << weather.windSpeed << "," << weather.windDirection;
+    weatherData.push_back(outstream.str());
+}
+
+void
+Output::clearWeatherData()
+{
+    weatherData.clear();
 }
 
 } // namespace wfs
