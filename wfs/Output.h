@@ -42,14 +42,14 @@ public:
      * \param landscape
      * \param fileName
      */
-    void writeFireWeatherDataToCSV(std::string fileName);
+    void writeFireWeatherDataToCSV(const std::string &fileName);
 
     /*!
      * \brief writeBurnDataToCSV
      * \param landscape
      * \param fileName
      */
-    static void writeBurnDataToCSV(LandscapeInterface &landscape, Fire &fire, std::string fileName);
+    static void writeBurnDataToCSV(LandscapeInterface &landscape, Fire &fire, const std::string &fileName);
     /*!
      * \brief setfileName
      * Function to generate file names.
@@ -58,7 +58,7 @@ public:
      * \param i
      * \return
      */
-    static std::string fileName(std::string baseName, std::string extention, int i);
+    static std::string fileName(const std::string &baseName, const std::string &extention, int i);
     /*!
      * \brief storeWeatherData
      * Function to extract weather data at a certain time.

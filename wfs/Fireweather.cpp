@@ -12,7 +12,7 @@ FireWeather::FireWeather()
  * \param fileName
  */
 void
-FireWeather::getFixedFireWeatherParameter(const std::string fileName, FireWeatherVariables *weather){
+FireWeather::getFixedFireWeatherParameter(const std::string &fileName, FireWeatherVariables *weather){
     auto reader = csv::Reader{',', '#'};
     auto parameters = reader.parse(fileName);
 
@@ -38,7 +38,7 @@ FireWeather::getFixedFireWeatherParameter(const std::string fileName, FireWeathe
  * \param landscape
  */
 void
-FireWeather::importMeteorologicalParameter(const std::string fileName)
+FireWeather::importMeteorologicalParameter(const std::string &fileName)
 {
     auto reader = csv::Reader{',', '#'};
     auto parameters = reader.parse(fileName);

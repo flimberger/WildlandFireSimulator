@@ -47,14 +47,14 @@ public:
      * extracts meteorological parameters from file.
      * \param fileName
      */
-    void importMeteorologicalParameter(const std::string fileName);
+    void importMeteorologicalParameter(const std::string &fileName);
 
     /*!
      * \brief getFixedFireWeatherParameter
      * imports fixed fire weather parameter from file.
      * \param fileName
      */
-    void getFixedFireWeatherParameter(const std::string fileName, FireWeatherVariables *weather);
+    void getFixedFireWeatherParameter(const std::string &fileName, FireWeatherVariables *weather);
 
     /*!
      * \brief calculateFireWeather

@@ -46,7 +46,7 @@ Simulation::runSimulation(wfs::Landscape *landscape, const FireWeatherVariables 
 
 
 Month
-Simulation::stringToMonth(std::string m){
+Simulation::stringToMonth(const std::string &m){
     std::vector<std::string> abrMonth{
         {"JAN"}, {"FEB"}, {"MAR"}, {"APR"}, {"MAY"}, {"JUN"},
         {"JUL"}, {"AUG"}, {"SEP"}, {"OCT"}, {"NOV"}, {"DEC"}

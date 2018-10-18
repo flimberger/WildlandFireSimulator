@@ -7,7 +7,7 @@ namespace wildland_firesim {
 namespace wfs {
 
 std::string
-Output::fileName(std::string baseName, std::string extention, int i)
+Output::fileName(const std::string &baseName, const std::string &extention, int i)
 {
     std::stringstream ss;
     ss << baseName << i << extention;
@@ -87,7 +87,7 @@ Output::writeVegetationDataToCSV(LandscapeInterface &landscape, std::string file
 }
 
 void
-Output::writeBurnDataToCSV(LandscapeInterface &landscape, Fire &fire, std::string fileName)
+Output::writeBurnDataToCSV(LandscapeInterface &landscape, Fire &fire, const std::string &fileName)
 {
     std::ofstream burnDataFile;
     //burnDataFile.open("output/"+fileName);
@@ -117,7 +117,7 @@ Output::writeBurnDataToCSV(LandscapeInterface &landscape, Fire &fire, std::strin
 }
 
 void
-Output::writeFireWeatherDataToCSV(std::string fileName)
+Output::writeFireWeatherDataToCSV(const std::string &fileName)
 {
     std::ofstream weatherDataFile;
     //weatherDataFile.open("output/"+fileName);

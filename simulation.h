@@ -22,7 +22,7 @@ class Simulation
 public:
     Simulation();
 
-    Month stringToMonth(std::string m);
+    Month stringToMonth(const std::string &m);
 
     /*!
      * \brief runSimulation
