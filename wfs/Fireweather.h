@@ -76,6 +76,10 @@ public:
      */
     void setStartingTime(int startOfFire);
 
+    bool getWindyConditions() const noexcept;
+    void setWindyConditions(bool isWindy) noexcept;
+
+private:
     //Meteorological Variables
     bool windyConditions;
     float windSpeed;
@@ -83,7 +87,6 @@ public:
     float relHumidity;
     float temperature;
 
-private:
     distrParameter<float> m_minimumDailyTemperatureParameter[NumberOfMonths];
     distrParameter<float> m_maximumDailyTemperatureParameter[NumberOfMonths];
     distrParameter<float> m_relativeHumidityParameter[NumberOfMonths];

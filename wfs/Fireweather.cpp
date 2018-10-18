@@ -186,5 +186,17 @@ FireWeather::calculateFireWeather(int month,int durationOfBurn)
     }
 }
 
+bool
+FireWeather::getWindyConditions() const noexcept
+{
+    return windyConditions;
+}
+
+void
+FireWeather::setWindyConditions(bool isWindy) noexcept
+{
+    windyConditions = isWindy;
+}
+
 } // namespace wfs
 } // namespace wildland_firesim
