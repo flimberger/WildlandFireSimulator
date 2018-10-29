@@ -15,3 +15,5 @@ add_executable(${PROJECT_NAME}
     simulation.cpp
     utility.cpp
     csvreader.cpp)
+
+add_subdirectory(test)
