@@ -21,35 +21,35 @@ public:
      * \param landscape
      * \param fileName
      */
-    void writeBurnMapToASCII(LandscapeInterface &landscape, std::string fileName);
+    void writeBurnMapToASCII(LandscapeInterface &landscape, const std::string &fileName);
     /*!
      * \brief writeVegetationMapToASCII
      * Function to write vegetation types into an ascii-grid.
      * \param landscape
      * \param fileName
      */
-    void writeVegetationMapToASCII(LandscapeInterface &landscape, std::string fileName);
+    void writeVegetationMapToASCII(LandscapeInterface &landscape, const std::string &fileName);
     /*!
      * \brief writeVegetationDataToCSV
      * Function to write vegetation parameters into a csv-Table
      * \param landscape
      * \param fileName
      */
-    void writeVegetationDataToCSV(LandscapeInterface &landscape, std::string fileName);
+    void writeVegetationDataToCSV(LandscapeInterface &landscape, const std::string &fileName);
     /*!
      * \brief writeFireWeatherDataToCSV
      * Function to write weather data into a csv-Table
      * \param landscape
      * \param fileName
      */
-    void writeFireWeatherDataToCSV(std::vector<std::string> weatherData , std::string fileName);
+    void writeFireWeatherDataToCSV(std::vector<std::string> weatherData, const std::string &fileName);
 
     /*!
      * \brief writeBurnDataToCSV
      * \param landscape
      * \param fileName
      */
-    void writeBurnDataToCSV(LandscapeInterface &landscape, Fire &fire, std::string fileName);
+    void writeBurnDataToCSV(LandscapeInterface &landscape, Fire &fire, const std::string &fileName);
     /*!
      * \brief setfileName
      * Function to generate file names.
@@ -58,7 +58,7 @@ public:
      * \param i
      * \return
      */
-    std::string setfileName(std::string baseName, std::string extention, int i);
+    std::string setfileName(const std::string &baseName, const std::string &extention, int i);
     /*!
      * \brief storeWeatherData
      * Function to extract weather data at a certain time.

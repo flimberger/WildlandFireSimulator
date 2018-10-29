@@ -10,7 +10,7 @@ Output::Output(): weatherData()
 }
 
 std::string
-Output::setfileName(std::string baseName, std::string extention, int i)
+Output::setfileName(const std::string &baseName, const std::string &extention, int i)
 {
     std::stringstream ss;
     ss << baseName << i << extention;
@@ -20,7 +20,7 @@ Output::setfileName(std::string baseName, std::string extention, int i)
 
 //functions for printing map to ASCII grid
 void
-Output::writeBurnMapToASCII(LandscapeInterface &landscape, std::string fileName)
+Output::writeBurnMapToASCII(LandscapeInterface &landscape, const std::string &fileName)
 {
     // create variable for output file stream
     std::ofstream burnDataFile;
@@ -44,7 +44,7 @@ Output::writeBurnMapToASCII(LandscapeInterface &landscape, std::string fileName)
 }
 
 void
-Output::writeVegetationMapToASCII(LandscapeInterface &landscape, std::string fileName)
+Output::writeVegetationMapToASCII(LandscapeInterface &landscape, const std::string &fileName)
 {
     std::ofstream vegetationTypeDataFile;
     //vegetationTypeDataFile.open("output/"+fileName);
@@ -67,7 +67,7 @@ Output::writeVegetationMapToASCII(LandscapeInterface &landscape, std::string fil
 
 //functions to write csv-files
 void
-Output::writeVegetationDataToCSV(LandscapeInterface &landscape, std::string fileName)
+Output::writeVegetationDataToCSV(LandscapeInterface &landscape, const std::string &fileName)
 {
     std::ofstream vegetationDataFile;
     //vegetationDataFile.open("output/"+fileName);
@@ -90,7 +90,7 @@ Output::writeVegetationDataToCSV(LandscapeInterface &landscape, std::string file
 }
 
 void
-Output::writeBurnDataToCSV(LandscapeInterface &landscape, Fire &fire, std::string fileName)
+Output::writeBurnDataToCSV(LandscapeInterface &landscape, Fire &fire, const std::string &fileName)
 {
     std::ofstream burnDataFile;
     //burnDataFile.open("output/"+fileName);
@@ -120,7 +120,7 @@ Output::writeBurnDataToCSV(LandscapeInterface &landscape, Fire &fire, std::strin
 }
 
 void
-Output::writeFireWeatherDataToCSV(std::vector<std::string> weatherData , std::string fileName)
+Output::writeFireWeatherDataToCSV(std::vector<std::string> weatherData , const std::string &fileName)
 {
     std::ofstream weatherDataFile;
     //weatherDataFile.open("output/"+fileName);
