@@ -49,9 +49,7 @@ public:
         m_simulateFireWeather = simulateFireWeather;
     }
 
-    void setMonth(const std::string &month) {
-        m_whichMonth = stringToMonth(month);
-    }
+    bool setMonth(const std::string &month);
 
     const Fire &getFire() const noexcept { return m_fire; }
 

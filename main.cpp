@@ -183,7 +183,10 @@ int main(int argc, char *argv[] )
 
     if (simulateFireWeather) {
         weatherSimulation.importMeteorologicalParameter(weatherFile);
-        fireSimulation.setMonth(month);
+        if (fireSimulation.setMonth(month)) {
+            fprintf(stderr, "invalid month name \"%s\"\n", month);
+            exit(1);
+        }
     } else {
        weatherSimulation.getFixedFireWeatherParameter(fixedWeatherFile, &weather);
     }

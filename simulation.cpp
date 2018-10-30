@@ -44,4 +44,15 @@ Simulation::runSimulation(WFS_Landscape *landscape, const FireWeatherVariables &
     }
 }
 
+bool Simulation::setMonth(const std::string &month)
+{
+    const auto res = stringToMonth(month);
+
+    if (res.success) {
+        m_whichMonth = res.value;
+    }
+
+    return res.success;
+}
+
 }  // namespace wildland_firesim

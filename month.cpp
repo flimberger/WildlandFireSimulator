@@ -23,7 +23,7 @@ bool equalsIgnoreCase(const std::string &s, const char *p, size_t l)
 
 }  // namespace
 
-Month stringToMonth(const std::string &m)
+MonthParseResult stringToMonth(const std::string &m)
 {
     static constexpr struct NameMapping {
         const char *name;
@@ -43,15 +43,16 @@ Month stringToMonth(const std::string &m)
         { "dec", Month::December }
     };
 
-    Month month;
+    MonthParseResult result = { Month::January, false };
 
     for (const auto &mapping : months) {
         if (equalsIgnoreCase(m, mapping.name, 3)) {
-            month = mapping.month;
+            result.value = mapping.month;
+            result.success = true;
         }
     }
 
-    return month; //warning if used uninitialized?!
+    return result; //warning if used uninitialized?!
 }
 
 }  // namespace wildland_firesim
