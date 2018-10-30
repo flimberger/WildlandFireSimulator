@@ -1,4 +1,4 @@
-#include "month.h"
+#include "../month.h"
 
 #include "catch.hpp"
 

@@ -17,11 +17,5 @@ add_executable(${PROJECT_NAME}
     utility.cpp
     csvreader.cpp)
 
-add_executable(test_month
-    test_month.cpp
-    month.cpp
-    test_base.cpp)
-
 enable_testing()
-
-add_test(MonthTest test_month)
+add_subdirectory(test)
