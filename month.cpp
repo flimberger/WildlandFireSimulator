@@ -7,20 +7,31 @@ namespace wildland_firesim {
 Month
 stringToMonth(const std::string &m)
 {
-    static std::vector<std::string> abrMonth{
-        {"JAN"}, {"FEB"}, {"MAR"}, {"APR"}, {"MAY"}, {"JUN"},
-        {"JUL"}, {"AUG"}, {"SEP"}, {"OCT"}, {"NOV"}, {"DEC"}
+    struct NameMapping {
+        std::string name;
+        Month month;
     };
-    static std::vector<Month> enumMonth{
-        Month::January, Month::February, Month::March, Month::April, Month::May, Month::June,
-        Month::June, Month::July, Month::September, Month::October, Month::November, Month::December
+
+    static std::vector<NameMapping> months {
+        { "JAN", Month::January },
+        { "FEB", Month::February },
+        { "MAR", Month::March },
+        { "APR", Month::April },
+        { "MAY", Month::May },
+        { "JUN", Month::June },
+        { "JUL", Month::July },
+        { "AUG", Month::August },
+        { "SEP", Month::September },
+        { "OCT", Month::October },
+        { "NOV", Month::November },
+        { "DEC", Month::December }
     };
 
     Month month;
 
-    for(size_t i = 0; i < abrMonth.size(); i++){
-        if (m == abrMonth[i]) {
-            month = enumMonth[i];
+    for (const auto &mapping : months) {
+        if (m == mapping.name) {
+            month = mapping.month;
         }
     }
 
