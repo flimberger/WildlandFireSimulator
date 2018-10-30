@@ -4,7 +4,7 @@
 
 namespace wildland_firesim {
 
-Output::Output(): weatherData()
+Output::Output(): m_weatherData()
 {
 
 }
@@ -90,7 +90,7 @@ Output::writeVegetationDataToCSV(LandscapeInterface &landscape, const std::strin
 }
 
 void
-Output::writeBurnDataToCSV(LandscapeInterface &landscape, Fire &fire, const std::string &fileName)
+Output::writeBurnDataToCSV(LandscapeInterface &landscape, const Fire &fire, const std::string &fileName)
 {
     std::ofstream burnDataFile;
     //burnDataFile.open("output/"+fileName);
@@ -105,10 +105,9 @@ Output::writeBurnDataToCSV(LandscapeInterface &landscape, Fire &fire, const std:
             burnDataFile << static_cast<int>(state) << ",";
 
             if(state==CellState::Burning){
-                for(size_t i = 0; i < fire.burningCellInformationVector.size(); i++){
-                    if(y == fire.burningCellInformationVector[i].yCoord &&
-                            x == fire.burningCellInformationVector[i].xCoord){
-                        burnDataFile << fire.burningCellInformationVector[i].meanFirelineIntensity;
+                for (const auto &burningCell : fire.getBurningCellInformation()) {
+                    if (y == burningCell.yCoord && x == burningCell.xCoord) {
+                        burnDataFile << burningCell.meanFirelineIntensity;
                     }
                 }
             }else{
@@ -120,14 +119,14 @@ Output::writeBurnDataToCSV(LandscapeInterface &landscape, Fire &fire, const std:
 }
 
 void
-Output::writeFireWeatherDataToCSV(std::vector<std::string> weatherData , const std::string &fileName)
+Output::writeFireWeatherDataToCSV(const std::string &fileName)
 {
     std::ofstream weatherDataFile;
     //weatherDataFile.open("output/"+fileName);
     weatherDataFile.open(fileName);
     weatherDataFile << "t, temperature, relHumidity, windSpeed, windDirection" << std::endl;
-    for(size_t i = 0; i<weatherData.size(); i++){
-        weatherDataFile << weatherData[i] << "\n";
+    for (const auto &line : m_weatherData) {
+        weatherDataFile << line << "\n";
     }
     weatherDataFile.close();
 }
@@ -143,4 +142,16 @@ Output::storeWeatherData(const FireWeatherVariables &weather, float durationOfBu
     return weatherData.str();
 }
 
-}//namespace wildland_firesim
+void
+Output::addWeatherData(const std::string &line)
+{
+    m_weatherData.emplace_back(line);
+}
+
+void
+Output::clearWeatherData()
+{
+    m_weatherData.clear();
+}
+
+} //namespace wildland_firesim

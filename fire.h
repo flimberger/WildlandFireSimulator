@@ -74,12 +74,16 @@ public:
         std::vector<int> spreadDirection;
     };
 
-    std::vector<burningCellInformation> burningCellInformationVector;
+    int getNumberOfCellsBurning() const noexcept;
 
-    float distance_to_cell_boundary[3];
-    int numberOfCellsBurning;
+    const std::vector<burningCellInformation> getBurningCellInformation() const noexcept;
 
-private:
+private:    
+    std::vector<burningCellInformation> m_burningCellInformationVector;
+
+    float m_distance_to_cell_boundary[3];
+    int m_numberOfCellsBurning;
+
     int heatYield = 17000;
 
     struct pointFireSourceInformation{

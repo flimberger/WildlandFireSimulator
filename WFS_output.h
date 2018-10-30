@@ -42,14 +42,14 @@ public:
      * \param landscape
      * \param fileName
      */
-    void writeFireWeatherDataToCSV(std::vector<std::string> weatherData, const std::string &fileName);
+    void writeFireWeatherDataToCSV(const std::string &fileName);
 
     /*!
      * \brief writeBurnDataToCSV
      * \param landscape
      * \param fileName
      */
-    void writeBurnDataToCSV(LandscapeInterface &landscape, Fire &fire, const std::string &fileName);
+    void writeBurnDataToCSV(LandscapeInterface &landscape, const Fire &fire, const std::string &fileName);
     /*!
      * \brief setfileName
      * Function to generate file names.
@@ -68,7 +68,11 @@ public:
      */
     std::string storeWeatherData(const FireWeatherVariables &weather, float durationOfBurn);
 
-    std::vector<std::string> weatherData;
+    void addWeatherData(const std::string &line);
+    void clearWeatherData();
+
+private:
+    std::vector<std::string> m_weatherData;
 };
 
 } //namespace wildland_firesim

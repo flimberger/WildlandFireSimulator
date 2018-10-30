@@ -74,12 +74,7 @@ public:
      */
     void setStartingTime(int startOfFire);
 
-    //Meteorological Variables
-    bool windyConditions;
-    float windSpeed;
-    int windDirection;
-    float relHumidity;
-    float temperature;
+    void setWindyConditions(bool windyConditions);
 
 private:
     distrParameter<float> m_minimumDailyTemperatureParameter[NumberOfMonths];
@@ -93,6 +88,13 @@ private:
     // Tn: min temperature, Tx: max temperature, Tp: min temperature of following day
     float Tn, Tx, Tp;
     int startingTime; //time for fire weather
+
+    //Meteorological Variables
+    bool m_windyConditions;
+    float m_windSpeed;
+    int m_windDirection;
+    float m_relHumidity;
+    float m_temperature;
 };
 
 } //namespace wildland_firesim
