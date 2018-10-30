@@ -6,11 +6,13 @@
 #include <vector>
 #include <sstream>
 #include <cmath>
-#include "csvreader.h"
-#include "utility.h"
+
 #include "globals.h"
 #include "cell.h"
+#include "csvreader.h"
 #include "fire.h"
+#include "month.h"
+#include "utility.h"
 
 namespace wildland_firesim {
 

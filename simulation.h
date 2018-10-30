@@ -3,11 +3,13 @@
 
 #include <iostream>
 #include <string>
-#include "utility.h"
+
 #include "globals.h"
+#include "fire.h"
+#include "month.h"
+#include "utility.h"
 #include "WFS_landscape.h"
 #include "WFS_fireweather.h"
-#include "fire.h"
 #include "WFS_output.h"
 
 namespace wildland_firesim{
@@ -54,8 +56,6 @@ public:
     const Fire &getFire() const noexcept { return m_fire; }
 
 private:
-    static Month stringToMonth(const std::string &m);
-
     int m_numberOfRuns;
     int m_maxFireDuration;
     bool m_simulateFireWeather;

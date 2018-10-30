@@ -12,6 +12,15 @@ add_executable(${PROJECT_NAME}
     WFS_landscape.cpp
     WFS_fireweather.cpp
     WFS_output.cpp
+    month.cpp
     simulation.cpp
     utility.cpp
     csvreader.cpp)
+
+add_executable(test_month
+    test_month.cpp
+    month.cpp)
+
+enable_testing()
+
+add_test(MonthTest test_month)
