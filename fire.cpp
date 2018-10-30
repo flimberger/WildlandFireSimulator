@@ -32,7 +32,7 @@ Fire::spreadFire(LandscapeInterface *landscape, const FireWeatherVariables &weat
         int y = m_burningCellInformationVector[i].yCoord;
 
         //access the respective cell
-        Cell* cell = landscape->getCellInformation(x,y);
+        const auto *cell = landscape->getCellInformation(x, y);
 
         //calculate input variables for fire spread
         float fuelLoad = cell->liveBiomass +

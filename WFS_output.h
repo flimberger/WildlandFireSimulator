@@ -21,21 +21,21 @@ public:
      * \param landscape
      * \param fileName
      */
-    void writeBurnMapToASCII(LandscapeInterface &landscape, const std::string &fileName);
+    void writeBurnMapToASCII(const LandscapeInterface &landscape, const std::string &fileName);
     /*!
      * \brief writeVegetationMapToASCII
      * Function to write vegetation types into an ascii-grid.
      * \param landscape
      * \param fileName
      */
-    void writeVegetationMapToASCII(LandscapeInterface &landscape, const std::string &fileName);
+    void writeVegetationMapToASCII(const LandscapeInterface &landscape, const std::string &fileName);
     /*!
      * \brief writeVegetationDataToCSV
      * Function to write vegetation parameters into a csv-Table
      * \param landscape
      * \param fileName
      */
-    void writeVegetationDataToCSV(LandscapeInterface &landscape, const std::string &fileName);
+    void writeVegetationDataToCSV(const LandscapeInterface &landscape, const std::string &fileName);
     /*!
      * \brief writeFireWeatherDataToCSV
      * Function to write weather data into a csv-Table
@@ -49,7 +49,7 @@ public:
      * \param landscape
      * \param fileName
      */
-    void writeBurnDataToCSV(LandscapeInterface &landscape, const Fire &fire, const std::string &fileName);
+    void writeBurnDataToCSV(const LandscapeInterface &landscape, const Fire &fire, const std::string &fileName);
     /*!
      * \brief setfileName
      * Function to generate file names.
