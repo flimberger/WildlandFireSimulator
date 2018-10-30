@@ -1,22 +1,16 @@
 #include "month.h"
 
-#include <utility>
-#include <vector>
-
-#define CATCH_CONFIG_MAIN
 #include "catch.hpp"
 
 using namespace wildland_firesim;
 
-TEST_CASE("Month is parsed", "[month]")
+TEST_CASE("Valid month names are parsed correctly", "[month]")
 {
-    struct TestMapEntry {
-        std::string upperCaseName;
-        std::string lowerCaseName;
+    static constexpr struct TestMapEntry {
+        const char *upperCaseName;
+        const char *lowerCaseName;
         Month month;
-    };
-
-    static std::vector<TestMapEntry> months {
+    } months[] {
         { "JAN", "jan", Month::January },
         { "FEB", "feb", Month::February },
         { "MAR", "mar", Month::March },

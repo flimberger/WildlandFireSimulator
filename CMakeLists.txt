@@ -19,7 +19,8 @@ add_executable(${PROJECT_NAME}
 
 add_executable(test_month
     test_month.cpp
-    month.cpp)
+    month.cpp
+    test_base.cpp)
 
 enable_testing()
 

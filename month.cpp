@@ -1,19 +1,34 @@
 #include "month.h"
 
-#include <algorithm>
-#include <vector>
+#include <cctype>
 
 namespace wildland_firesim {
+namespace {
 
-Month
-stringToMonth(const std::string &m)
+// Returns true if the input strings `s' converted to all lower case is equal to `p'.
+bool equalsIgnoreCase(const std::string &s, const char *p, size_t l)
 {
-    struct NameMapping {
-        std::string name;
-        Month month;
-    };
+    if (s.size() != l) {
+        return false;
+    }
 
-    static std::vector<NameMapping> months {
+    for (size_t i = 0; i < l; ++i) {
+        if (std::tolower(s[i]) != p[i]) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+}  // namespace
+
+Month stringToMonth(const std::string &m)
+{
+    static constexpr struct NameMapping {
+        const char *name;
+        Month month;
+    } months[] {
         { "jan", Month::January },
         { "feb", Month::February },
         { "mar", Month::March },
@@ -28,17 +43,10 @@ stringToMonth(const std::string &m)
         { "dec", Month::December }
     };
 
-    // convert the month name to lower space
-    auto lowerCaseName = m;
-
-    std::for_each(std::begin(lowerCaseName), std::end(lowerCaseName), [](char &c){
-        c = static_cast<char>(std::tolower(static_cast<unsigned char>(c)));;
-    });
-
     Month month;
 
     for (const auto &mapping : months) {
-        if (lowerCaseName == mapping.name) {
+        if (equalsIgnoreCase(m, mapping.name, 3)) {
             month = mapping.month;
         }
     }
