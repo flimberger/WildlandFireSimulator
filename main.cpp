@@ -206,10 +206,10 @@ int main(int argc, char *argv[] )
         fireSimulation.runSimulation(&modelLandscape, weather, weatherSimulation, &output);
 
         //creating simulation output
-        output.writeBurnMapToASCII(modelLandscape, output.setfileName("burn_map", ".asc", i));
-        output.writeBurnDataToCSV(modelLandscape, fireSimulation.getFire(), output.setfileName("burndata", ".csv", i));
+        Output::writeBurnMapToASCII(modelLandscape, Output::createFilename("burn_map", ".asc", i));
+        Output::writeBurnDataToCSV(modelLandscape, fireSimulation.getFire(), Output::createFilename("burndata", ".csv", i));
         if (fireSimulation.getSimulateFireWeather()) {
-            output.writeFireWeatherDataToCSV(output.setfileName("weatherdata", ".csv", i));
+            output.writeFireWeatherDataToCSV(Output::createFilename("weatherdata", ".csv", i));
             output.clearWeatherData();
         }
     }

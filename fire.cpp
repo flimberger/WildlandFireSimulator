@@ -38,16 +38,16 @@ Fire::spreadFire(LandscapeInterface *landscape, const FireWeatherVariables &weat
         float fuelLoad = cell->liveBiomass +
                 cell->deadBiomass;
         float degreeOfCuring = cell->deadBiomass / fuelLoad;
-        float fuelMoisture = estimateGrassFuelMoisture(weather.temperature,
-                                                       weather.relHumidity,
-                                                       degreeOfCuring);
-        float availableFuel = fuelLoad * estimateFuelAvailability(fuelMoisture);
+        float fuelMoisture = Fire::estimateGrassFuelMoisture(weather.temperature,
+                                                             weather.relHumidity,
+                                                             degreeOfCuring);
+        float availableFuel = fuelLoad * Fire::estimateFuelAvailability(fuelMoisture);
 
         //calculate headfire rate of spread
         //float headFireRateOfSpread = calculateHeadFireRateOfSpread(fuelMoisture, weather.windSpeed);
-        float headFireRateOfSpread = calculateHeadFireRateOfSpread(fuelLoad, fuelMoisture,
-                                                                   weather.relHumidity,
-                                                                   weather.windSpeed);
+        float headFireRateOfSpread = Fire::calculateHeadFireRateOfSpread(fuelLoad, fuelMoisture,
+                                                                         weather.relHumidity,
+                                                                         weather.windSpeed);
 
         // initialize fireline Intensity sum for vegetation effects
         float sumIntensity = 0.0;
@@ -56,10 +56,10 @@ Fire::spreadFire(LandscapeInterface *landscape, const FireWeatherVariables &weat
         for(size_t k = 0; k<m_burningCellInformationVector[i].burnStatus.size(); k++){
             //get rate of spread within the burning cell
             // vector also required for ignition of point fire source
-            float rateOfSpread = calculateDirectionalRateOfSpread(weather.windSpeed,
-                                                                  weather.windDirection,
-                                                                  headFireRateOfSpread,
-                                                                  m_burningCellInformationVector[i].spreadDirection[k]);
+            float rateOfSpread = Fire::calculateDirectionalRateOfSpread(weather.windSpeed,
+                                                                        weather.windDirection,
+                                                                        headFireRateOfSpread,
+                                                                        m_burningCellInformationVector[i].spreadDirection[k]);
 
             //sum fireline within cell
             sumIntensity = sumIntensity+calculateFirelineIntensity(rateOfSpread,availableFuel);
@@ -178,13 +178,13 @@ Fire::spreadFire(LandscapeInterface *landscape, const FireWeatherVariables &weat
                     float fuelLoad = cell->liveBiomass +
                             cell->deadBiomass;
                     float degreeOfCuring = (cell->deadBiomass/ fuelLoad);
-                    float fuelMoisture = estimateGrassFuelMoisture(weather.temperature,
-                                                                   weather.relHumidity,
-                                                                   degreeOfCuring);
+                    float fuelMoisture = Fire::estimateGrassFuelMoisture(weather.temperature,
+                                                                         weather.relHumidity,
+                                                                         degreeOfCuring);
 
                     // test for ignition
-                    if(utility::random() < calculateCellIgnitionProbability(pointFireSourceInformationVector[i].fireIntensity,
-                                                                          fuelMoisture)){
+                    if(utility::random() < Fire::calculateCellIgnitionProbability(pointFireSourceInformationVector[i].fireIntensity,
+                                                                                  fuelMoisture)){
                         //set cell state to burning
                         burningCellInformation newBurningCell;
                         newBurningCell.uCoordSource = pointFireSourceInformationVector[i].uCoord;
@@ -207,10 +207,10 @@ Fire::spreadFire(LandscapeInterface *landscape, const FireWeatherVariables &weat
                             float headFireRateOfSpread = calculateHeadFireRateOfSpread(fuelMoisture,
                                                                                        weather.windSpeed);
                             */
-                            float rateOfSpread =  calculateDirectionalRateOfSpread(weather.windSpeed,
-                                                                                   weather.windDirection,
-                                                                                   headFireRateOfSpread,
-                                                                                   newBurningCell.spreadDirection[ll]);
+                            float rateOfSpread =  Fire::calculateDirectionalRateOfSpread(weather.windSpeed,
+                                                                                         weather.windDirection,
+                                                                                         headFireRateOfSpread,
+                                                                                         newBurningCell.spreadDirection[ll]);
                             //update burn status
                             newBurningCell.burnStatus.push_back((rateOfSpread*pointFireSourceInformationVector[i].remainingTime) /
                                                                 m_distance_to_cell_boundary[ll]);

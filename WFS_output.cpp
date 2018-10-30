@@ -10,7 +10,7 @@ Output::Output(): m_weatherData()
 }
 
 std::string
-Output::setfileName(const std::string &baseName, const std::string &extention, int i)
+Output::createFilename(const std::string &baseName, const std::string &extention, int i)
 {
     std::stringstream ss;
     ss << baseName << i << extention;

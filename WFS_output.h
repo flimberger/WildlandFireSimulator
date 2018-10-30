@@ -21,21 +21,21 @@ public:
      * \param landscape
      * \param fileName
      */
-    void writeBurnMapToASCII(const LandscapeInterface &landscape, const std::string &fileName);
+    static void writeBurnMapToASCII(const LandscapeInterface &landscape, const std::string &fileName);
     /*!
      * \brief writeVegetationMapToASCII
      * Function to write vegetation types into an ascii-grid.
      * \param landscape
      * \param fileName
      */
-    void writeVegetationMapToASCII(const LandscapeInterface &landscape, const std::string &fileName);
+    static void writeVegetationMapToASCII(const LandscapeInterface &landscape, const std::string &fileName);
     /*!
      * \brief writeVegetationDataToCSV
      * Function to write vegetation parameters into a csv-Table
      * \param landscape
      * \param fileName
      */
-    void writeVegetationDataToCSV(const LandscapeInterface &landscape, const std::string &fileName);
+    static void writeVegetationDataToCSV(const LandscapeInterface &landscape, const std::string &fileName);
     /*!
      * \brief writeFireWeatherDataToCSV
      * Function to write weather data into a csv-Table
@@ -49,7 +49,7 @@ public:
      * \param landscape
      * \param fileName
      */
-    void writeBurnDataToCSV(const LandscapeInterface &landscape, const Fire &fire, const std::string &fileName);
+    static void writeBurnDataToCSV(const LandscapeInterface &landscape, const Fire &fire, const std::string &fileName);
     /*!
      * \brief setfileName
      * Function to generate file names.
@@ -58,7 +58,7 @@ public:
      * \param i
      * \return
      */
-    std::string setfileName(const std::string &baseName, const std::string &extention, int i);
+    static std::string createFilename(const std::string &baseName, const std::string &extention, int i);
     /*!
      * \brief storeWeatherData
      * Function to extract weather data at a certain time.
