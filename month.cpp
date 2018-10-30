@@ -1,5 +1,6 @@
 #include "month.h"
 
+#include <algorithm>
 #include <vector>
 
 namespace wildland_firesim {
@@ -13,24 +14,31 @@ stringToMonth(const std::string &m)
     };
 
     static std::vector<NameMapping> months {
-        { "JAN", Month::January },
-        { "FEB", Month::February },
-        { "MAR", Month::March },
-        { "APR", Month::April },
-        { "MAY", Month::May },
-        { "JUN", Month::June },
-        { "JUL", Month::July },
-        { "AUG", Month::August },
-        { "SEP", Month::September },
-        { "OCT", Month::October },
-        { "NOV", Month::November },
-        { "DEC", Month::December }
+        { "jan", Month::January },
+        { "feb", Month::February },
+        { "mar", Month::March },
+        { "apr", Month::April },
+        { "may", Month::May },
+        { "jun", Month::June },
+        { "jul", Month::July },
+        { "aug", Month::August },
+        { "sep", Month::September },
+        { "oct", Month::October },
+        { "nov", Month::November },
+        { "dec", Month::December }
     };
+
+    // convert the month name to lower space
+    auto lowerCaseName = m;
+
+    std::for_each(std::begin(lowerCaseName), std::end(lowerCaseName), [](char &c){
+        c = static_cast<char>(std::tolower(static_cast<unsigned char>(c)));;
+    });
 
     Month month;
 
     for (const auto &mapping : months) {
-        if (m == mapping.name) {
+        if (lowerCaseName == mapping.name) {
             month = mapping.month;
         }
     }

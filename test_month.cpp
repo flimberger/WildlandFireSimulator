@@ -10,22 +10,29 @@ using namespace wildland_firesim;
 
 TEST_CASE("Month is parsed", "[month]")
 {
-    static std::vector<std::pair<std::string, Month>> months {
-        { "JAN", Month::January },
-        { "FEB", Month::February },
-        { "MAR", Month::March },
-        { "APR", Month::April },
-        { "MAY", Month::May },
-        { "JUN", Month::June },
-        { "JUL", Month::July },
-        { "AUG", Month::August },
-        { "SEP", Month::September },
-        { "OCT", Month::October },
-        { "NOV", Month::November },
-        { "DEC", Month::December }
+    struct TestMapEntry {
+        std::string upperCaseName;
+        std::string lowerCaseName;
+        Month month;
     };
 
-    for (const auto &p : months) {
-        REQUIRE(stringToMonth(p.first) == p.second);
+    static std::vector<TestMapEntry> months {
+        { "JAN", "jan", Month::January },
+        { "FEB", "feb", Month::February },
+        { "MAR", "mar", Month::March },
+        { "APR", "apr", Month::April },
+        { "MAY", "may", Month::May },
+        { "JUN", "jun", Month::June },
+        { "JUL", "jul", Month::July },
+        { "AUG", "aug", Month::August },
+        { "SEP", "sep", Month::September },
+        { "OCT", "oct", Month::October },
+        { "NOV", "nov", Month::November },
+        { "DEC", "dec", Month::December }
+    };
+
+    for (const auto &mapping : months) {
+        REQUIRE(stringToMonth(mapping.upperCaseName) == mapping.month);
+        REQUIRE(stringToMonth(mapping.lowerCaseName) == mapping.month);
     }
 }
