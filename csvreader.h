@@ -1,15 +1,14 @@
 #ifndef WILDLAND_FIRESIM_CSVREADER_H
 #define WILDLAND_FIRESIM_CSVREADER_H
 
-#include <sstream>
-#include <istream>
 #include <string>
 #include <vector>
-#include <algorithm>
-#include <fstream>
 
 namespace wildland_firesim {
 namespace csv {
+
+class StatePrivate;
+
 /*!
  * \brief The Reader class
  * Class containing the parser for csv-files.
@@ -18,6 +17,7 @@ class Reader{
 
 public:
     Reader(char delimiter, char comment);
+
     /*!
      * \brief parse
      * Function to parse .csv-files.
@@ -27,9 +27,9 @@ public:
     std::vector<std::vector<std::string>> parse(const std::string &fileName);
 
 private:
-  char m_delimiter;
-  //char m_quote;
-  char m_comment;
+    // dialect specification
+    char m_comment;
+    char m_delimiter;
 };
 
 } //namespace wildland_firesim

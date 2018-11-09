@@ -1,5 +1,9 @@
 #include "WFS_landscape.h"
 
+#include <fstream>
+#include <sstream>
+#include <utility>
+
 namespace wildland_firesim {
 
 WFS_Landscape::WFS_Landscape()

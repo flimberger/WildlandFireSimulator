@@ -34,9 +34,9 @@ TEST_CASE("CSV data is parsed correctly", "[csv]")
     stream << "# 1, 2, 3, 4\n"
            << "1, 2, 3, 4\n"
            << " 1, 2, 3, 4 \n"
-           << "\t1,\t,2\t3,\t4\t\n"
+           << "\t1,\t2,\t3,\t4\t\n"
            << "1,2,3,4\n"
-           << "   # a single comment, in the middle\n"
+           << "# a single comment, in the middle\n"
            << " 1 , 2 , 3 , 4 \n"
            << "1\t,\t2,3 ,4\n";
     stream.close();
@@ -44,13 +44,6 @@ TEST_CASE("CSV data is parsed correctly", "[csv]")
     auto reader = CsvReader{',', '#'};
 
     const auto &data = reader.parse(testFileName);
-
-    for (const auto &line : data) {
-        for (const auto &elem : line) {
-            std::cout << '"' << elem << "\" ";
-        }
-        std::cout << "\\n\n";
-    }
 
     CHECK(data.size() == 6);
     for (size_t i = 0; i < data.size(); ++i) {

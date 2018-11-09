@@ -1,76 +1,87 @@
 #include "csvreader.h"
 
+#include <algorithm>
+#include <fstream>
+#include <iostream>
 #include <sstream>
 
 namespace wildland_firesim {
-
 namespace csv {
+namespace {
+
+enum class State {
+    StartRecord,
+    StartField,
+    InField,
+    InComment
+};
+
+}  // namespace
+
 Reader::Reader(char delimiter, char comment)
-    : m_delimiter{delimiter}, m_comment{comment}
+    : m_comment{comment}, m_delimiter{delimiter}
 {}
 
 std::vector<std::vector<std::string>>
 Reader::parse(const std::string &fileName)
 {
-    std::ifstream input_stream{fileName};
+    auto result = std::vector<std::vector<std::string>>{};
+    auto input_stream = std::ifstream{fileName};
 
-    std::vector<std::vector<std::string>> result;
-    std::string line;
-    std::string currentValue;
+    if (!input_stream.is_open()) {
+        std::cerr << "failed to open file \"" << fileName << '\"' << std::endl;
+        return result;
+    }
 
-    // Function within Function. Functeption! (lamda expression)
-    auto push_result = [&result, &currentValue]() {
-        //remove whitespace
-        const char *whitespace = " \t\r\n";
-        auto start = currentValue.find_first_not_of(whitespace);
-        auto end = currentValue.find_last_not_of(whitespace);
-        if (start == std::string::npos || end == std::string::npos){
-            currentValue.clear();
-        }else
-        {
-        currentValue.substr(start, end-start);
-        //copy string stream content into last element of vector in last element of vector
-        result.back().emplace_back(currentValue);
-        //currentValue.clear();should clear the bit set.. but there were still fucking values in it!
-        currentValue.clear();
-        }
-    };
+    auto logbuf = std::stringstream{};
+    auto buf = std::stringstream{};
+    const int eof = std::ifstream::traits_type::eof();
+    auto  state = State::StartRecord;
 
-    while (std::getline(input_stream, line)) {
-        //comment lines and empty lines are skipped
-        if (line.length() == 0 || line[0] == m_comment){
-            continue;
-        }
-        //new line
-        result.emplace_back();
-        //if only one value in line get that value
-        auto delim = line.find(m_delimiter);
-        if(delim == std::string::npos){
-            currentValue = line;
-            push_result();
-            continue;
-        }else{
-
-            //get positions of delimiter within string
-            std::vector<size_t> pos;
-
-            for(size_t i = 0; i < line.length(); i++){
-                if(line[i] == m_delimiter){
-                    pos.push_back(i);
-                }
+    for (int c = input_stream.get(); c != eof; c = input_stream.get()) {
+        switch (state) {
+        case State::StartRecord:
+            if (c == m_comment) {
+                state = State::InComment;
+                break;
             }
-            //extract first value
-            currentValue = line.substr(0, pos[0]-1);
-            push_result();
-            for(size_t j = 0; j < pos.size(); j++){
-                // starting position,
-                currentValue = line.substr(pos[j]+1,pos[j+1]-pos[j]-1);
-                push_result();
+            result.emplace_back();
+            state = State::StartField;
+            [[clang::fallthrough]];
+        case State::StartField:
+            if (c == '\n') {
+                // empty field; empty row
+                result.back().emplace_back();
+                state = State::StartRecord;
+            } else if (c == m_delimiter) {
+                // empty field again
+                result.back().emplace_back();
+            } else {
+                buf << static_cast<char>(c);
+                state = State::InField;
             }
-            //push_result();
+            break;
+        case State::InComment:
+            if (c == '\n') {
+                state = State::StartRecord;
+            }
+            break;
+        case State::InField:
+            if (c == '\n') {
+                result.back().emplace_back(buf.str());
+                buf = std::stringstream{};
+                state = State::StartRecord;
+            } else if (c == m_delimiter) {
+                result.back().emplace_back(buf.str());
+                buf = std::stringstream{};
+                state = State::StartField;
+            } else {
+                buf << static_cast<char>(c);
+            }
+            break;
         }
     }
-    input_stream.close();
+
     return result;
 }
 
